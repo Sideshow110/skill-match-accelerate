@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -36,27 +37,22 @@ export const DemoRequestForm = ({ open, onOpenChange }: DemoRequestFormProps) =>
     setIsSubmitting(true);
     
     try {
-      // In a production environment, you would send this data to your backend
-      // For now, we'll simulate the email sending process
-      console.log("Form data to be emailed:", data);
+      // Save the form data to Supabase "Leads" table
+      const { error } = await supabase
+        .from("Leads")
+        .insert([
+          { 
+            "Name": data.name, 
+            "e-mail": data.email 
+          }
+        ]);
+        
+      if (error) {
+        console.error("Error submitting to Supabase:", error);
+        throw error;
+      }
       
-      // Simulate API request
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Here you would typically make an API call to your backend
-      // which would then send an email with the form data
-      // Example:
-      // await fetch('/api/send-email', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     to: "your-email@example.com",
-      //     subject: "New Demo Request from " + data.name,
-      //     text: `Name: ${data.name}\nEmail: ${data.email}`
-      //   })
-      // });
-      
-      toast.success("Request submitted! We'll be in touch shortly. An email notification has been sent to the team.");
+      toast.success("Request submitted! We'll be in touch shortly.");
       form.reset();
       onOpenChange(false);
     } catch (error) {
