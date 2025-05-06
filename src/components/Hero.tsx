@@ -1,8 +1,12 @@
 
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DemoRequestForm } from "@/components/DemoRequestForm";
 
 export const Hero = () => {
+  const [isDemoFormOpen, setIsDemoFormOpen] = useState(false);
+
   return (
     <section className="relative">
       {/* Background gradient decoration */}
@@ -28,10 +32,19 @@ export const Hero = () => {
               screening, and candidate evaluation - saving you time and connecting you with perfect-fit talent.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-2">
-              <Button size="lg" className="font-medium">
+              <Button 
+                size="lg" 
+                className="font-medium"
+                onClick={() => setIsDemoFormOpen(true)}
+              >
                 Request Demo <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button size="lg" variant="outline" className="font-medium">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="font-medium"
+                onClick={() => setIsDemoFormOpen(true)}
+              >
                 See How It Works
               </Button>
             </div>
@@ -70,6 +83,9 @@ export const Hero = () => {
           </div>
         </div>
       </div>
+      
+      {/* Demo Request Form */}
+      <DemoRequestForm open={isDemoFormOpen} onOpenChange={setIsDemoFormOpen} />
     </section>
   );
 };

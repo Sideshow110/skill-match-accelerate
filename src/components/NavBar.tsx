@@ -2,9 +2,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { DemoRequestForm } from "@/components/DemoRequestForm";
 
 export const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDemoFormOpen, setIsDemoFormOpen] = useState(false);
+
+  const handleDemoRequest = () => {
+    setIsDemoFormOpen(true);
+    setIsMenuOpen(false); // Close mobile menu if open
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border py-4">
@@ -32,7 +39,7 @@ export const NavBar = () => {
             </a>
           </div>
           <div>
-            <Button size="sm">
+            <Button size="sm" onClick={handleDemoRequest}>
               Request Demo
             </Button>
           </div>
@@ -80,11 +87,14 @@ export const NavBar = () => {
               Solutions
             </a>
             <div className="pt-4">
-              <Button>Request Demo</Button>
+              <Button onClick={handleDemoRequest}>Request Demo</Button>
             </div>
           </div>
         </div>
       )}
+
+      {/* Demo Request Form */}
+      <DemoRequestForm open={isDemoFormOpen} onOpenChange={setIsDemoFormOpen} />
     </nav>
   );
 };
