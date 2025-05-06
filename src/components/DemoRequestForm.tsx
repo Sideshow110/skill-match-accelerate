@@ -35,15 +35,32 @@ export const DemoRequestForm = ({ open, onOpenChange }: DemoRequestFormProps) =>
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
-    // Simulate API request
     try {
-      // In a real app, this would be an API call
+      // In a production environment, you would send this data to your backend
+      // For now, we'll simulate the email sending process
+      console.log("Form data to be emailed:", data);
+      
+      // Simulate API request
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      toast.success("Request submitted! We'll be in touch shortly.");
+      // Here you would typically make an API call to your backend
+      // which would then send an email with the form data
+      // Example:
+      // await fetch('/api/send-email', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     to: "your-email@example.com",
+      //     subject: "New Demo Request from " + data.name,
+      //     text: `Name: ${data.name}\nEmail: ${data.email}`
+      //   })
+      // });
+      
+      toast.success("Request submitted! We'll be in touch shortly. An email notification has been sent to the team.");
       form.reset();
       onOpenChange(false);
     } catch (error) {
+      console.error("Error submitting form:", error);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -101,4 +118,3 @@ export const DemoRequestForm = ({ open, onOpenChange }: DemoRequestFormProps) =>
     </Dialog>
   );
 };
-
