@@ -31,10 +31,7 @@ export const NavBar = () => {
               Solutions
             </a>
           </div>
-          <div className="flex space-x-3">
-            <Button variant="outline" size="sm">
-              Log In
-            </Button>
+          <div>
             <Button size="sm">
               Request Demo
             </Button>
@@ -82,8 +79,7 @@ export const NavBar = () => {
             >
               Solutions
             </a>
-            <div className="pt-4 flex flex-col space-y-3">
-              <Button variant="outline">Log In</Button>
+            <div className="pt-4">
               <Button>Request Demo</Button>
             </div>
           </div>
